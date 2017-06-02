@@ -1,0 +1,2 @@
+class HangmanGameController < ApplicationController
+end
