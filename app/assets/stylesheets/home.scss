@@ -17,9 +17,12 @@
   }
 
   .button-container {
-    @include center-content;
 
-    button {
+    form {
+      @include center-content;
+    }
+
+    input {
       width: 100%;
       height: 100%;
 
@@ -29,7 +32,7 @@
       background-color: transparent;
     }
 
-    button:hover {
+    input:hover {
       color: white;
       background-color: black;
     }

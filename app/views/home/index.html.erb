@@ -3,8 +3,6 @@
     <h1>Hangman</h1>
   </div>
   <div class="button-container">
-    <button>
-      New Game
-    </button>
+    <%= button_to 'New Game', new_hangman_game_url, method: :get %>
   </div>
 </div>
