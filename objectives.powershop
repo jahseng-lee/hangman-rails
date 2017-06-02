@@ -1,0 +1,6 @@
+ Rails hangman game, test-first
+- Explore a wide range of idiomatic "classic" Rails facilities
+- Vanilla Rails: models, views, controllers, validations, scopes, helpers. No post-modern Rails (eg services, presenters, decorators etc.)
+- Use rails form helpers, no heavy-duty javascripting
+- Apply OO principles from POODR etc.
+- Group code reviews
