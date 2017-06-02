@@ -8,34 +8,48 @@
   justify-content: center;
 }
 
+@mixin border-bottom {
+  border-bottom: black 1px solid;
+}
+
 .page-container {
   height: 100vh;
   height: 100vw;
 
   .title {
     @include center-content;
+
+    @include border-bottom;
   }
 
   .button-container {
 
     form {
       @include center-content;
+      @include border-bottom;
     }
 
     input {
       width: 100%;
       height: 100%;
 
+      padding-top: 10px;
+      padding-bottom: 10px;
+
       font-size: 20px;
 
       border: none;
-      background-color: transparent;
-    }
 
-    input:hover {
       color: white;
       background-color: black;
     }
+
+    input:hover {
+      color: black;
+      background-color: white;
+    }
+
   }
+
 }
 
