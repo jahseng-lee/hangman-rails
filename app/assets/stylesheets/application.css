@@ -27,3 +27,9 @@ h1 {
 input {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+.page-container {
+  height: 100vh;
+  height: 100vw;
+}
+
