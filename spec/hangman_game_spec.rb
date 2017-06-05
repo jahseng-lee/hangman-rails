@@ -119,11 +119,10 @@ RSpec.describe HangmanGame do
     ) }
 
     let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
-                      ']', '{', '}' ]
+                      ']', '{', '}' ] }
 
     it 'should not accept symbols' do
       random_symbols = symbols.sample(3)
-
       expect(game.valid_input?(random_symbols.first)).to be_falsey
       expect(game.valid_input?(random_symbols.second)).to be_falsey
       expect(game.valid_input?(random_symbols.third)).to be_falsey
