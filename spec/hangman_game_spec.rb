@@ -1,6 +1,53 @@
 require 'rails_helper'
 
 RSpec.describe HangmanGame do
+  describe 'with invalid fields' do
+    it 'should not save with an empty mystery word' do
+      game = HangmanGame.new(
+        mystery_word: '',
+        lives: 1
+      )
+
+      expect(game.save).to be_falsey
+    end
+
+    it 'should not save with a mystery word that has symbols' do
+      game = HangmanGame.new(
+        mystery_word: '\@dabomb',
+        lives: 1
+      )
+
+      expect(game.save).to be_falsey
+    end
+
+    it 'should not save with a mystery word that has numbers' do
+      game = HangmanGame.new(
+        mystery_word: 'l33t',
+        lives: 1
+      )
+
+      expect(game.save).to be_falsey
+    end
+
+    it 'should not save with a mystery word that has blank space' do
+      game = HangmanGame.new(
+        mystery_word: 'hello darkness',
+        lives: 1
+      )
+
+      expect(game.save).to be_falsey
+    end
+
+    it 'should not save with 0 or less initial lives' do
+      game = HangmanGame.new(
+        mystery_word: 'abc',
+        lives: 0
+      )
+
+      expect(game.save).to be_falsey
+    end
+  end
+
   describe 'with correct input' do
     let(:mystery_word) { 'abc' }
     let(:game) { HangmanGame.new(
