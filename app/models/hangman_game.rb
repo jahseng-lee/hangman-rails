@@ -13,6 +13,12 @@ class HangmanGame < ApplicationRecord
     errors.add(:mystery_word, 'is not alphabetical') unless mystery_word.eql?(/^[A-Za-z]+$/)
   end
 
+  def masked_word
+    mystery_word.chars.map do |c|
+      c ? c : nil
+    end
+  end
+
   def valid_input?(char)
     input = char.downcase
     single_alpha?(input) && !duplicate?(input)
