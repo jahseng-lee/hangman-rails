@@ -153,7 +153,7 @@ RSpec.describe HangmanGame do
 
   describe 'player runs out of lives' do
     let(:mystery_word) { 'abc' }
-    let(:lives) { 2 }
+    let(:initial_lives) { 2 }
 
     it 'should lose the game' do
       game.guess('x')
