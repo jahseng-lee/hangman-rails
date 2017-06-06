@@ -1,154 +1,147 @@
 require 'rails_helper'
 
 RSpec.describe HangmanGame do
-  describe 'with invalid fields' do
-    it 'should not save with an empty mystery word' do
-      game = HangmanGame.new(
-        mystery_word: '',
-        lives: 1
-      )
+  let(:initial_lives) { 1 }
+  let(:mystery_word) { 'abc' }
+  subject(:game) { HangmanGame.create(mystery_word: mystery_word,
+                                   initial_lives: initial_lives) }
 
-      expect(game).to be_invalid
+  describe 'new game validation' do
+
+    context 'with an empty word' do
+      let(:mystery_word) { '' }
+
+      it 'should not save' do
+        expect(game).to be_invalid
+      end
     end
 
-    it 'should not save with a mystery word that has symbols' do
-      game = HangmanGame.new(
-        mystery_word: '\@dabomb',
-        lives: 1
-      )
+    context "with a word that has symbols" do
+      let(:mystery_word) { '\@dabomb' }
 
-      expect(game).to be_invalid
+      it 'should not save' do
+        expect(game).to be_invalid
+      end
     end
 
-    it 'should not save with a mystery word that has numbers' do
-      game = HangmanGame.new(
-        mystery_word: 'l33t',
-        lives: 1
-      )
+    context "with a word that has numbers" do
+      let(:mystery_word) { 'l33t' }
 
-      expect(game).to be_invalid
+      it 'should not save' do
+        expect(game).to be_invalid
+      end
     end
 
-    it 'should not save with a mystery word that has blank space' do
-      game = HangmanGame.new(
-        mystery_word: 'hello darkness',
-        lives: 1
-      )
+    context "with a word that has blank space" do
+      let(:mystery_word) { 'hello darkness' }
 
-      expect(game).to be_invalid
+      it 'should not save' do
+        expect(game).to be_invalid
+      end
     end
 
-    it 'should not save with a mystery word that is 1 character' do
-      game = HangmanGame.new(
-        mystery_word: 'h',
-        lives: 1
-      )
+    context "with a singular character word" do
+      let(:mystery_word) { 'h' }
 
-      expect(game).to be_invalid
+      it 'should not save' do
+        expect(game).to be_invalid
+      end
     end
 
+    context "with an alphabetical mystery word with more than 1 character" do
+      let(:mystery_word) { 'hh' }
 
-    it 'should save with an alphabetical mystery word with more than 1 character' do
-      game = HangmanGame.new(
-        mystery_word: 'abc',
-        lives: 1
-      )
-
-      expect(game).to be_invalid
+      it 'should save' do
+        expect(game).to be_invalid
+      end
     end
 
-    it 'should not save with 0 or less initial lives' do
-      game = HangmanGame.new(
-        mystery_word: 'abc',
-        lives: 0
-      )
+    context "with 0 or less initial lives" do
+      let(:initial_lives) { 0 }
 
-      expect(game).to be_invalid
+      it 'should not save with 0 lives' do
+        expect(game).to be_invalid
+      end
+
+      let(:initial_lives) { -1 }
+
+      it 'should not save with -1 lives' do
+        expect(game).to be_invalid
+      end
     end
   end
 
-  describe 'with correct input' do
+  describe 'valid input' do
     let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 1
-    ) }
 
-    it 'should reveal the letter in masked word' do
-      game.guess(mystery_word.chars.first)
+    context 'given correct input' do
+      let(:correct_input) { mystery_word.chars.first }
 
-      expect(game.masked_word).to eql([ 'a', nil, nil ])
+      it 'should reveal the letter in masked word' do
+        game.guess(correct_input)
+
+        expect(game.masked_word).to eql([ 'a', nil, nil ])
+      end
+
+      it 'should not decrement life' do
+        initial_lives = game.lives
+        game.guess(correct_input)
+
+        expect(game.lives).to eql(initial_lives)
+      end
     end
 
-    it 'should not decrement life' do
-      initial_lives = game.lives
-      game.guess(mystery_word.chars.first)
+    context 'given incorrect input' do
+      let(:incorrect_input) { 'z' }
 
-      expect(game.lives).to eql(initial_lives)
-    end
-  end
+      it 'should not reveal any letters in masked word' do
+        game.guess(incorrect_input)
 
-  describe 'with incorrect input' do
-    let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 2
-    ) }
+        expect(game.masked_word).to eql([ nil, nil, nil])
+      end
 
-    it 'should not reveal any letters in masked word' do
-      game.guess('z')
+      it 'should decrement the players life' do
+        initial_lives = game.lives
+        game.guess(incorrect_input)
 
-      expect(game.masked_word).to eql([ nil, nil, nil])
+        expect(game.lives).to eql(initial_lives - 1)
+      end
     end
 
-    it 'should decrement the players life' do
-      initial_lives = game.lives
-      game.guess(mystery_word.chars.first)
+    context 'given uppercase input' do
+      let(:uppercase_input) { 'A' }
 
-      expect(game.lives).to eql(initial_lives - 1)
-    end
-  end
+      it 'should reveal the letter in the masked word' do
+        game.guess(uppercase_input)
 
-  describe 'with uppercase input' do
-    let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 1
-    ) }
-
-    it 'should reveal the letter in the masked word' do
-      game.guess(mystery_word.chars.first.uppercase)
-
-      expect(game.masked_word).to eql([ 'a', nil, nil ])
+        expect(game.masked_word).to eql([ 'a', nil, nil ])
+      end
     end
   end
 
-  describe 'with uppercase in the mystery word' do
+  describe 'uppercase in mystery word' do
     let(:mystery_word) { 'AbCc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 1
-    ) }
 
-    it 'should reveal the uppercase letter in the masked word given lowercase input' do
-      game.guess(mystery_word.chars.first.lowercase)
+    context 'lowercase input' do
+      let(:lowercase_input) { 'a' }
 
-      expect(game.masked_word).to eql([ 'A', nil, nil, nil ])
-    end
+      it 'should reveal the uppercase letter in the masked word' do
+        game.guess(lowercase_input)
 
-    it 'should reveal all occurences of letter regardless of case' do
-      game.guess(mystery_word.chars.last)
+        expect(game.masked_word).to eql([ 'A', nil, nil, nil ])
+      end
 
-      expect(game.masked_word).to eql([ nil, nil, 'C', 'c' ])
+      let(:lowercase_input) { 'c' }
+      it 'should reveal all occurences of letter regardless of case' do
+        game.guess(lowercase_input)
+
+        expect(game.masked_word).to eql([ nil, nil, 'C', 'c' ])
+      end
     end
   end
 
-  describe 'if all letters are guessed' do
+  describe 'all letters are guessed' do
     let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 1
-    ) }
 
     it 'should win the game' do
       game.guess(mystery_word.chars.first)
@@ -160,17 +153,13 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'if player runs out of lives' do
+  describe 'player runs out of lives' do
     let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 2
-    ) }
+    let(:lives) { 2 }
 
     it 'should lose the game' do
       game.guess('x')
       game.guess('y')
-      game.guess('z')
 
       expect(game).not_to be_won
       expect(game).not_to be_running
@@ -179,40 +168,47 @@ RSpec.describe HangmanGame do
 
   describe 'input validator' do
     let(:mystery_word) { 'abc' }
-    let(:game) { HangmanGame.new(
-      mystery_word: mystery_word,
-      lives: 1
-    ) }
 
-    let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
-                      ']', '{', '}' ] }
+    context 'invalid inputs' do
+      let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
+                        ']', '{', '}' ] }
 
-    it 'should not accept symbols' do
-      random_symbols = symbols.sample(3)
-      expect(game.valid_input?(random_symbols.first)).to be_falsey
-      expect(game.valid_input?(random_symbols.second)).to be_falsey
-      expect(game.valid_input?(random_symbols.third)).to be_falsey
+      it 'should reject symbols' do
+        random_symbols = symbols.sample(3)
+        expect(game.valid_input?(random_symbols.first)).to be_falsey
+        expect(game.valid_input?(random_symbols.second)).to be_falsey
+        expect(game.valid_input?(random_symbols.third)).to be_falsey
+      end
+
+      it 'should reject numbers' do
+        expect(game.valid_input?('1')).to be_falsey
+        expect(game.valid_input?('9')).to be_falsey
+      end
+
+      it 'should reject multiple characters' do
+        expect(game.valid_input?('ab')).to be_falsey
+      end
+
+      it 'should reject empty inputs' do
+        expect(game.valid_input?('')).to be_falsey
+      end
+
+      it 'should reject letters already guessed' do
+        game.guess('a')
+        expect(game.valid_input?('a')).to be_falsey
+      end
     end
 
-    it 'should not accept numeric input' do
-      expect(game.valid_input?('1')).to be_falsey
-      expect(game.valid_input?('9')).to be_falsey
+
+    context 'valid inputs' do
+      it 'should accept lowercase alphabetic inputs' do
+        expect(game.valid_input?('b')).to be_truthy
+      end
+
+      it 'should accept uppercase alphabetic inputs' do
+        expect(game.valid_input?('A')).to be_truthy
+      end
     end
 
-    it 'should not accept inputs with more than one character' do
-      expect(game.valid_input?('ab')).to be_falsey
-    end
-
-    it 'should not accept empty inputs' do
-      expect(game.valid_input?('')).to be_falsey
-    end
-
-    it 'should accept lowercase alphabetic inputs' do
-      expect(game.valid_input?('B')).to be_falsey
-    end
-
-    it 'should accept uppercase alphabetic inputs' do
-      expect(game.valid_input?('A')).to be_truthy
-    end
   end
 end
