@@ -47,6 +47,16 @@ RSpec.describe HangmanGame do
       expect(game).to be_invalid
     end
 
+
+    it 'should save with an alphabetical mystery word with more than 1 character' do
+      game = HangmanGame.new(
+        mystery_word: 'abc',
+        lives: 1
+      )
+
+      expect(game).to be_invalid
+    end
+
     it 'should not save with 0 or less initial lives' do
       game = HangmanGame.new(
         mystery_word: 'abc',
