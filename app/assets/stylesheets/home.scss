@@ -19,6 +19,8 @@
 }
 
 .button-container {
+  height: 100%;
+  background-color: black;
 
   form {
     @include center-content;
