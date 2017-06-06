@@ -8,14 +8,8 @@
   justify-content: center;
 }
 
-@mixin border-bottom {
-  border-bottom: black 1px solid;
-}
-
 .title {
   @include center-content;
-
-  @include border-bottom;
 }
 
 .button-container {
@@ -24,7 +18,6 @@
 
   form {
     @include center-content;
-    @include border-bottom;
   }
 
   input {
