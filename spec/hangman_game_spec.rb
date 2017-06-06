@@ -7,7 +7,7 @@ RSpec.describe HangmanGame do
   subject(:game) { HangmanGame.create(mystery_word: mystery_word,
                                    initial_lives: initial_lives) }
 
-  describe 'new game validation' do
+  describe 'testing new game validation' do
 
     context 'with an empty word' do
       let(:mystery_word) { '' }
@@ -72,10 +72,10 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'valid input' do
+  describe 'testing valid input' do
     let(:mystery_word) { 'abc' }
 
-    context 'given correct input' do
+    context 'given input occuring in the mystery word' do
       let(:correct_input) { mystery_word.chars.first }
 
       it 'should reveal the letter in masked word' do
@@ -92,7 +92,7 @@ RSpec.describe HangmanGame do
       end
     end
 
-    context 'given incorrect input' do
+    context 'given input not appearing in the mystery word' do
       let(:incorrect_input) { 'z' }
 
       it 'should not reveal any letters in masked word' do
@@ -109,7 +109,7 @@ RSpec.describe HangmanGame do
       end
     end
 
-    context 'given uppercase input' do
+    context 'given uppercase input appearing in the word' do
       let(:uppercase_input) { 'A' }
 
       it 'should reveal the letter in the masked word' do
@@ -120,10 +120,10 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'uppercase in mystery word' do
+  describe 'a game with uppercase letters in mystery word' do
     let(:mystery_word) { 'AbCc' }
 
-    context 'lowercase input' do
+    context 'given lowercase input' do
       it 'should reveal the uppercase letter in the masked word' do
         game.guess('a')
 
@@ -138,7 +138,7 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'all letters are guessed' do
+  describe 'testing all letters are guessed' do
     let(:mystery_word) { 'abc' }
 
     it 'should win the game' do
@@ -151,12 +151,11 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'player runs out of lives' do
+  describe 'testing player runs out of lives' do
     let(:mystery_word) { 'abc' }
-    let(:initial_lives) { 2 }
+    let(:initial_lives) { 1 }
 
     it 'should lose the game' do
-      game.guess('x')
       game.guess('y')
 
       expect(game).not_to be_won
@@ -164,10 +163,10 @@ RSpec.describe HangmanGame do
     end
   end
 
-  describe 'input validator' do
+  describe 'testing input validator' do
     let(:mystery_word) { 'abc' }
 
-    context 'invalid inputs' do
+    context 'with invalid inputs' do
       let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
                         ']', '{', '}' ] }
 
@@ -197,7 +196,7 @@ RSpec.describe HangmanGame do
       end
     end
 
-    context 'valid inputs' do
+    context 'with valid inputs' do
       it 'should accept lowercase alphabetic inputs' do
         expect(game.valid_input?('b')).to be_truthy
       end
