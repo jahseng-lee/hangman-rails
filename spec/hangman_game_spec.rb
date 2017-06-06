@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HangmanGame do
+  # TODO make these tests read like english
   let(:initial_lives) { 1 }
   let(:mystery_word) { 'abc' }
   subject(:game) { HangmanGame.create(mystery_word: mystery_word,
@@ -123,17 +124,14 @@ RSpec.describe HangmanGame do
     let(:mystery_word) { 'AbCc' }
 
     context 'lowercase input' do
-      let(:lowercase_input) { 'a' }
-
       it 'should reveal the uppercase letter in the masked word' do
-        game.guess(lowercase_input)
+        game.guess('a')
 
         expect(game.masked_word).to eql([ 'A', nil, nil, nil ])
       end
 
-      let(:lowercase_input) { 'c' }
       it 'should reveal all occurences of letter regardless of case' do
-        game.guess(lowercase_input)
+        game.guess('c')
 
         expect(game.masked_word).to eql([ nil, nil, 'C', 'c' ])
       end
