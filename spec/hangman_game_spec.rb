@@ -8,7 +8,7 @@ RSpec.describe HangmanGame do
         lives: 1
       )
 
-      expect(game.save).to be_falsey
+      expect(game).to be_invalid
     end
 
     it 'should not save with a mystery word that has symbols' do
@@ -17,7 +17,7 @@ RSpec.describe HangmanGame do
         lives: 1
       )
 
-      expect(game.save).to be_falsey
+      expect(game).to be_invalid
     end
 
     it 'should not save with a mystery word that has numbers' do
@@ -26,7 +26,7 @@ RSpec.describe HangmanGame do
         lives: 1
       )
 
-      expect(game.save).to be_falsey
+      expect(game).to be_invalid
     end
 
     it 'should not save with a mystery word that has blank space' do
@@ -35,7 +35,16 @@ RSpec.describe HangmanGame do
         lives: 1
       )
 
-      expect(game.save).to be_falsey
+      expect(game).to be_invalid
+    end
+
+    it 'should not save with a mystery word that is 1 character' do
+      game = HangmanGame.new(
+        mystery_word: 'h',
+        lives: 1
+      )
+
+      expect(game).to be_invalid
     end
 
     it 'should not save with 0 or less initial lives' do
@@ -44,7 +53,7 @@ RSpec.describe HangmanGame do
         lives: 0
       )
 
-      expect(game.save).to be_falsey
+      expect(game).to be_invalid
     end
   end
 
