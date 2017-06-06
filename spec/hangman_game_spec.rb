@@ -199,7 +199,6 @@ RSpec.describe HangmanGame do
       end
     end
 
-
     context 'valid inputs' do
       it 'should accept lowercase alphabetic inputs' do
         expect(game.valid_input?('b')).to be_truthy
@@ -209,6 +208,5 @@ RSpec.describe HangmanGame do
         expect(game.valid_input?('A')).to be_truthy
       end
     end
-
   end
 end
