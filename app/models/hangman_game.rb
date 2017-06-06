@@ -55,11 +55,10 @@ class HangmanGame < ApplicationRecord
   private
 
   def incorrect_guesses
-    # NOTE compact feels really gross
-    guesses.chars.map do |c|
+    guesses.chars.select do |c|
       if mystery_word.downcase.exclude? c
         c
       end
-    end.compact
+    end
   end
 end
