@@ -3,7 +3,7 @@ class HangmanGame < ApplicationRecord
 
   validates :mystery_word, :mystery_word_is_alphabetical, length: { minimum: 2 }
   validates :initial_lives, numericality: { greater_than: 0 }
-  validates :mystery_word, :lives, presence: true
+  validates_presence_of :mystery_word, :lives
 
   def guess(input)
     guesses << input.downcase
@@ -43,7 +43,12 @@ class HangmanGame < ApplicationRecord
   end
 
   def mystery_word_is_alphabetical
-    errors.add(:mystery_word, 'is not alphabetical') unless mystery_word.eql?(/^[A-Za-z]+$/)
+    if mystery_word[/^[A-Za-z]+$/]
+      true
+    else
+      errors.add(:mystery_word, 'is not alphabetical') 
+      false
+    end
   end
 
   def duplicate?(input)
