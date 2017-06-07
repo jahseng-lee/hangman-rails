@@ -10,4 +10,9 @@ class HangmanGameController < ApplicationController
   def index
     @games = HangmanGame.all
   end
+
+  def show
+    @game = HangmanGame.find(params[:id])
+    render 'game'
+  end
 end
