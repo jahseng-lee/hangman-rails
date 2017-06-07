@@ -44,6 +44,7 @@ group :development, :test do
   gem 'database_cleaner'
   # Add Factory Girls for test database
   gem 'factory_girl_rails'
+  gem 'rails-controller-testing'
 end
 
 group :development do
