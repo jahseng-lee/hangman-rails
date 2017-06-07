@@ -43,12 +43,7 @@ class HangmanGame < ApplicationRecord
   end
 
   def mystery_word_is_alphabetical
-    if mystery_word[/^[A-Za-z]+$/]
-      true
-    else
-      errors.add(:mystery_word, 'is not alphabetical') 
-      false
-    end
+    mystery_word[/^[A-Za-z]+$/] ? true : errors.add(:mystery_word, 'is not alphabetical')
   end
 
   def duplicate?(input)
