@@ -4,7 +4,11 @@ RSpec.describe HangmanGameController do
   describe 'GET index' do
     it 'gets all games from the database' do
       create_list(:hangman_game, 5)
-      expect(assigns(:games).length).to eql(5)
+
+      get :index
+
+      expect(assigns(:games))
+      expect(:games.length).to eql(5)
     end
 
     it 'renders the index template' do
@@ -24,23 +28,20 @@ RSpec.describe HangmanGameController do
     end
 
     it 'renders the game template' do
-      create(:hangman_game)
-      get :show, params: { :id => id }
+      game = create(:hangman_game)
+      get :show, params: { id: game.id }
 
       expect(response).to render_template("game")
     end
   end
 
   describe 'POST new' do
-    before(:each) do
-      post :new
-    end
-
     it 'creates a new HangmanGame' do
-      expect(assigns(:game)).to be_a_new(HangmanGame)
+      expect { post :new }.to change(HangmanGame, :count).by(1)
     end
 
     it 'renders the game template' do
+      post :new
       expect(response).to render_template("game")
     end
   end
