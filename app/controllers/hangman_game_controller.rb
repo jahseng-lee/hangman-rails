@@ -6,4 +6,8 @@ class HangmanGameController < ApplicationController
       render 'game'
     end
   end
+
+  def index
+    @games = HangmanGame.all
+  end
 end
