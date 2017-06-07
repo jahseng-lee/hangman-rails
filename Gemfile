@@ -42,6 +42,8 @@ group :development, :test do
   # Add support for rspec
   gem 'rspec-rails'
   gem 'database_cleaner'
+  # Add Factory Girls for test database
+  gem 'factory_girl_rails'
 end
 
 group :development do
