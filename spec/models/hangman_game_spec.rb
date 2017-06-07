@@ -14,6 +14,10 @@ RSpec.describe HangmanGame do
       it 'should not save' do
         expect(game).to be_invalid
       end
+
+      it 'should contain a mystery word error' do
+        expect(game.errors[:mystery_word])
+      end
     end
 
     context "with a word that has symbols" do
