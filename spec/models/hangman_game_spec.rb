@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe HangmanGame do
-  # TODO make these tests read like english
   let(:initial_lives) { 1 }
   let(:mystery_word) { 'abc' }
   subject(:game) { HangmanGame.create(mystery_word: mystery_word,
@@ -53,7 +52,7 @@ RSpec.describe HangmanGame do
       let(:mystery_word) { 'hh' }
 
       it 'should save' do
-        expect(game).to be_invalid
+        expect(game).to be_valid
       end
     end
 
