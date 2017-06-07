@@ -1,0 +1,9 @@
+<%= render 'partials/header' %>
+<div>
+  <% @games.each do |game| %>
+    <div>
+      <%= game.masked_word %>
+      <%= game.lives %>
+    </div>
+  <% end %>
+</div>
