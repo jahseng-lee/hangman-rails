@@ -1,7 +1,7 @@
 <div class="page-container">
   <%= render 'partials/header' %>
   <div class="button-container">
-    <%= button_to 'New Game', new_hangman_game_url, method: :get %>
+    <%= button_to 'New Game', hangman_game_index_url, method: :post %>
     <%= button_to 'View Past Games', hangman_game_index_url, method: :get %>
     <%= button_to '???', 'https://www.http.cat/502', method: :get %>
   </div>
