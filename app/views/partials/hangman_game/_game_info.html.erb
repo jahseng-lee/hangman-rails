@@ -1,0 +1,17 @@
+<div class='game-info-container'>
+  <div class='game-info masked-word'>
+    Current word:
+    <div>
+      <% game.masked_word.each do |letter| %>
+        <% if letter == nil %>
+          _
+        <% else %>
+          letter
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class='game-info lives'>
+    Lives left: <%= game.lives %>
+  </div>
+</div>
