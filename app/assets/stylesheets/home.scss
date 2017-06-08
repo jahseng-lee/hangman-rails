@@ -10,6 +10,8 @@
 
 .title {
   @include center-content;
+
+  border-bottom: 2px solid black;
 }
 
 .button-container {
