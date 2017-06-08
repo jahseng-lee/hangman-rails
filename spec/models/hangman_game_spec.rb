@@ -7,7 +7,6 @@ RSpec.describe HangmanGame do
                                    initial_lives: initial_lives) }
 
   describe 'testing new game validation' do
-
     context 'with an empty word' do
       let(:mystery_word) { '' }
 
