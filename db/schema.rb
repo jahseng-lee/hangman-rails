@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606030641) do
+ActiveRecord::Schema.define(version: 20170608230408) do
+
+  create_table "guesses", force: :cascade do |t|
+    t.string "char"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "hangman_games", force: :cascade do |t|
     t.integer "initial_lives"
