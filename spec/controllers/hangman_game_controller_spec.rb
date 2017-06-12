@@ -36,4 +36,19 @@ RSpec.describe HangmanGameController do
       expect(response).to redirect_to HangmanGame.last
     end
   end
+
+  describe 'PUT update' do
+    let(:game) { create(:hangman_game) }
+    let(:request) { put :update, params: { :id => game.id, :guess => 'f' } }
+
+    it 'creates a new Guess' do
+      expect { request }.to change(Guess, :count).by(1)
+    end
+
+    it 'renders the show template' do
+      request
+
+      expect(response).to redirect_to HangmanGame.find(game.id)
+    end
+  end
 end
