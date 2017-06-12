@@ -1,3 +1,32 @@
-// Place all the styles related to the HangmanGame controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$picture-width: 70%;
+$info-width: 100% - $picture-width;
+
+.game-container {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  .hangman-picture {
+    width: $picture-width;
+  }
+
+  .game-info-container {
+    height: 100%;
+    width: $info-width;
+
+    display: flex;
+    flex-direction: column;
+
+    color: white;
+    background-color: black;
+
+    border-left: 2px solid black;
+
+    .game-info {
+      padding-left: 20px;
+      padding-top: 35px;
+    }
+  }
+}
