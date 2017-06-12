@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608230408) do
+ActiveRecord::Schema.define(version: 20170612000308) do
 
   create_table "guesses", force: :cascade do |t|
     t.string "char"
-    t.integer "game_id"
+    t.integer "hangman_game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
