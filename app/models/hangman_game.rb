@@ -1,17 +1,18 @@
 class HangmanGame < ApplicationRecord
-  after_initialize :set_guesses
+  has_many :guesses, dependent: :destroy
 
-  validates :mystery_word, :mystery_word_is_alphabetical, length: { minimum: 2 }
+  validates :mystery_word, length: { minimum: 2 }
+  validates_format_of :mystery_word, :with => /\A[A-Za-z]+\Z/
   validates :initial_lives, numericality: { greater_than: 0 }
   validates_presence_of :mystery_word, :lives
 
   def guess(input)
-    guesses << input.downcase
+    Guess.create(char: input.downcase, hangman_game_id: self.id)
   end
 
   def masked_word
     mystery_word.chars.map do |c|
-      if guesses.include? c.downcase
+      if Guess.find_by char: c.downcase, hangman_game_id: self.id
         c
       else
         nil
@@ -38,16 +39,8 @@ class HangmanGame < ApplicationRecord
 
   private
 
-  def set_guesses
-    self.guesses = ''
-  end
-
-  def mystery_word_is_alphabetical
-    errors.add(:mystery_word, 'is not alphabetical') unless mystery_word[/^[A-Za-z]+$/]
-  end
-
   def duplicate?(input)
-    guesses.chars.include? input
+    Guess.find_by char: input, hangman_game_id: self.id
   end
 
   def single_alpha?(input)
@@ -55,10 +48,6 @@ class HangmanGame < ApplicationRecord
   end
 
   def incorrect_guesses
-    guesses.chars.select do |c|
-      if mystery_word.downcase.exclude? c
-        c
-      end
-    end
+    Guess.where("char NOT IN (?)", mystery_word.chars)
   end
 end
