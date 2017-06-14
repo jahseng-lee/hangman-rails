@@ -7,6 +7,6 @@ class MakeGuess
   end
 
   def call
-    Guess.create(hangman_game_id: @hangman_game_id, char: @char.downcase)
+    Guess.create(hangman_game_id: @hangman_game_id, char: @char.downcase).valid?
   end
 end
