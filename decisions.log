@@ -1,0 +1,29 @@
+---------------------------
+Guess/MakeGuess validation:
+  Options:
+    1. Barebones validation in the Model, smart validation in the Service.
+      Pros:
+        - Model only worries about it's information
+      Cons:
+        - Have to maintain validation across Model and Service, and test both seperately.
+
+    2. All validation in the Model, Service simply relays result to Controller.
+      Pros:
+        - All logic about Guess on Model
+        - Service is light and doesn't need to be tested
+      Cons:
+        - Service has to return constants OR true, bad practice
+
+    3. All validation in the Model, including writting to errors[]. Service just creates Model.
+      Pros:
+        - All logic about Guess on Model
+        - Service is really light, just returns result of Model.create
+      Cons:
+        - Default error messages for validations are not user-friendly
+
+Me: I like 3, very loosely coupled objects.
+Jordan: Seems to use 1 in his TicketToRide.
+Minns: Leaned towards 3 as well
+
+Decision: 3, with a helper for the view to create nice errors for the user.
+
