@@ -6,10 +6,6 @@ class HangmanGame < ApplicationRecord
   validates :initial_lives, numericality: { greater_than: 0 }
   validates_presence_of :mystery_word, :lives
 
-  def guess(input)
-    Guess.create(char: input.downcase, hangman_game_id: self.id)
-  end
-
   def masked_word
     mystery_word.chars.map do |c|
       if Guess.find_by char: c.downcase, hangman_game_id: self.id
@@ -18,11 +14,6 @@ class HangmanGame < ApplicationRecord
         nil
       end
     end
-  end
-
-  def valid_input?(char)
-    input = char.downcase
-    single_alpha?(input) && !duplicate?(input)
   end
 
   def lives

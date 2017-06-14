@@ -81,14 +81,14 @@ RSpec.describe HangmanGame do
       let(:correct_input) { mystery_word.chars.first }
 
       it 'reveals the letter in masked word' do
-        game.guess(correct_input)
+        MakeGuess.new(char: correct_input, hangman_game_id: game.id).call
 
         expect(game.masked_word).to eql([ 'a', nil, nil ])
       end
 
       it 'does not decrement life' do
         initial_lives = game.lives
-        game.guess(correct_input)
+        MakeGuess.new(char: correct_input, hangman_game_id: game.id).call
 
         expect(game.lives).to eql(initial_lives)
       end
@@ -98,14 +98,14 @@ RSpec.describe HangmanGame do
       let(:incorrect_input) { 'z' }
 
       it 'does not reveal any letters in masked word' do
-        game.guess(incorrect_input)
+        MakeGuess.new(char: incorrect_input, hangman_game_id: game.id).call
 
-        expect(game.masked_word).to eql([ nil, nil, nil])
+        expect(game.masked_word).to eql([ nil, nil, nil ])
       end
 
       it 'does decrement the players life' do
         initial_lives = game.lives
-        game.guess(incorrect_input)
+        MakeGuess.new(char: incorrect_input, hangman_game_id: game.id).call
 
         expect(game.lives).to eql(initial_lives - 1)
       end
@@ -115,7 +115,7 @@ RSpec.describe HangmanGame do
       let(:uppercase_input) { 'A' }
 
       it 'reveals the letter in the masked word' do
-        game.guess(uppercase_input)
+        MakeGuess.new(char: uppercase_input, hangman_game_id: game.id).call
 
         expect(game.masked_word).to eql([ 'a', nil, nil ])
       end
@@ -127,13 +127,13 @@ RSpec.describe HangmanGame do
 
     context 'given lowercase input' do
       it 'reveals the uppercase letter in the masked word' do
-        game.guess('a')
+        MakeGuess.new(char: 'a', hangman_game_id: game.id).call
 
         expect(game.masked_word).to eql([ 'A', nil, nil, nil ])
       end
 
       it 'reveals all occurences of letter regardless of case' do
-        game.guess('c')
+        MakeGuess.new(char: 'c', hangman_game_id: game.id).call
 
         expect(game.masked_word).to eql([ nil, nil, 'C', 'c' ])
       end
@@ -144,9 +144,9 @@ RSpec.describe HangmanGame do
     let(:mystery_word) { 'abc' }
 
     it 'wins the game' do
-      game.guess(mystery_word.chars.first)
-      game.guess(mystery_word.chars.second)
-      game.guess(mystery_word.chars.third)
+      MakeGuess.new(char: mystery_word.chars.first, hangman_game_id: game.id).call
+      MakeGuess.new(char: mystery_word.chars.second, hangman_game_id: game.id).call
+      MakeGuess.new(char: mystery_word.chars.third, hangman_game_id: game.id).call
 
       expect(game).to be_won
       expect(game).not_to be_running
@@ -158,54 +158,56 @@ RSpec.describe HangmanGame do
     let(:initial_lives) { 1 }
 
     it 'loses the game' do
-      game.guess('y')
+      MakeGuess.new(char: 'y', hangman_game_id: game.id).call
 
       expect(game).not_to be_won
       expect(game).not_to be_running
     end
   end
 
-  describe 'testing input validator' do
-    let(:mystery_word) { 'abc' }
+  # TODO this block doesn't belong here anymore
 
-    context 'with invalid inputs' do
-      let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
-                        ']', '{', '}' ] }
+  #describe 'testing input validator' do
+  #  let(:mystery_word) { 'abc' }
 
-      it 'rejects symbols' do
-        random_symbols = symbols.sample(3)
-        expect(game.valid_input?(random_symbols.first)).to be_falsey
-        expect(game.valid_input?(random_symbols.second)).to be_falsey
-        expect(game.valid_input?(random_symbols.third)).to be_falsey
-      end
+  #  context 'with invalid inputs' do
+  #    let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
+  #                      ']', '{', '}' ] }
 
-      it 'rejects numbers' do
-        expect(game.valid_input?('1')).to be_falsey
-        expect(game.valid_input?('9')).to be_falsey
-      end
+  #    it 'rejects symbols' do
+  #      random_symbols = symbols.sample(3)
+  #      expect(game.valid_input?(random_symbols.first)).to be_falsey
+  #      expect(game.valid_input?(random_symbols.second)).to be_falsey
+  #      expect(game.valid_input?(random_symbols.third)).to be_falsey
+  #    end
 
-      it 'rejects multiple characters' do
-        expect(game.valid_input?('ab')).to be_falsey
-      end
+  #    it 'rejects numbers' do
+  #      expect(game.valid_input?('1')).to be_falsey
+  #      expect(game.valid_input?('9')).to be_falsey
+  #    end
 
-      it 'rejects empty inputs' do
-        expect(game.valid_input?('')).to be_falsey
-      end
+  #    it 'rejects multiple characters' do
+  #      expect(game.valid_input?('ab')).to be_falsey
+  #    end
 
-      it 'rejects letters already guessed' do
-        game.guess('a')
-        expect(game.valid_input?('a')).to be_falsey
-      end
-    end
+  #    it 'rejects empty inputs' do
+  #      expect(game.valid_input?('')).to be_falsey
+  #    end
 
-    context 'with valid inputs' do
-      it 'accepts lowercase alphabetic inputs' do
-        expect(game.valid_input?('b')).to be_truthy
-      end
+  #    it 'rejects letters already guessed' do
+  #      game.guess('a')
+  #      expect(game.valid_input?('a')).to be_falsey
+  #    end
+  #  end
 
-      it 'accepts uppercase alphabetic inputs' do
-        expect(game.valid_input?('A')).to be_truthy
-      end
-    end
-  end
+  #  context 'with valid inputs' do
+  #    it 'accepts lowercase alphabetic inputs' do
+  #      expect(game.valid_input?('b')).to be_truthy
+  #    end
+
+  #    it 'accepts uppercase alphabetic inputs' do
+  #      expect(game.valid_input?('A')).to be_truthy
+  #    end
+  #  end
+  #end
 end

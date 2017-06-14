@@ -20,10 +20,8 @@ class HangmanGameController < ApplicationController
   end
 
   def update
-    @game = HangmanGame.find(params[:id])
-
-    if @game.guess(params[:guess])
-      redirect_to @game
+    if MakeGuess.new(game_id: params[:id], char: params[:guess]).call
+      redirect_to show
     else
       flash[:error] = "Couldn't update guesses"
     end

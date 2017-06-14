@@ -39,16 +39,21 @@ RSpec.describe HangmanGameController do
 
   describe 'PUT update' do
     let(:game) { create(:hangman_game) }
-    let(:request) { put :update, params: { :id => game.id, :guess => 'f' } }
+    let(:update_request) { put :update, params: { :id => game.id, :guess => 'f' } }
 
-    it 'creates a new Guess' do
-      expect { request }.to change(Guess, :count).by(1)
+    it 'calls the MakeGuess service' do
+      expect_any_instance_of(MakeGuess).to receive(:call)
+
+      update_request
     end
 
-    it 'renders the show template' do
-      request
+    context 'given MakeGuess returns a truthy value' do
+      let(:make_guess_service) { instance_double("MakeGuess", :call => true) }
+      it 'renders the show template' do
+        update_request
 
-      expect(response).to redirect_to HangmanGame.find(game.id)
+        expect(response).to redirect_to HangmanGame.last
+      end
     end
   end
 end
