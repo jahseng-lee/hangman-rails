@@ -10,7 +10,8 @@ class HangmanGameController < ApplicationController
   def create
     @game = HangmanGame.new(
       mystery_word: HangmanGameHelper.random_word,
-      initial_lives: HangmanGameHelper::INITIAL_LIVES)
+      initial_lives: HangmanGameHelper::INITIAL_LIVES
+    )
 
     if @game.save
       redirect_to @game
