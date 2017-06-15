@@ -39,5 +39,21 @@ RSpec.describe Guess do
         expect(Guess.create(char: 'f', hangman_game: game)).to be_valid
       end
     end
+
+    context 'when game is over' do
+      let(:game) { create(:hangman_game) }
+      let(:guess) { Guess.create(char: 'f', hangman_game: game) }
+      before do
+        allow(game).to receive(:running?).and_return(false)
+      end
+
+      it 'does not save' do
+        expect(guess).to be_invalid
+      end
+
+      it 'raises an error' do
+        expect(guess.errors[:hangman_game])
+      end
+    end
   end
 end
