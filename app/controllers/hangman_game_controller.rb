@@ -1,3 +1,5 @@
+require './app/services/make_guess'
+
 class HangmanGameController < ApplicationController
   def index
     @games = HangmanGame.all
