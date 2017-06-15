@@ -15,6 +15,16 @@ RSpec.describe MakeGuess do
       it 'creates a Guess' do
         expect { make_guess.call }.to change(game.guesses, :count).by(1)
       end
+
+      describe 'and an uppercase input' do
+        let(:char) { 'F' }
+
+        it 'creates a downcase Guess' do
+          make_guess.call
+
+          expect(game.guesses.find_by(char: 'f')).to be_truthy
+        end
+      end
     end
 
     context 'with invalid parameters' do
