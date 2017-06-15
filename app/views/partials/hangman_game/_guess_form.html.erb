@@ -1,6 +1,4 @@
 <div class='interface-component'>
-  <!-- TODO error handling -->
-
   <%= form_tag({ controller: "hangman_game", action: "update" }, method: "put") do %>
     <%= label_tag(:guess, "Guess: ") %>
     <%= text_field_tag(:guess) %>

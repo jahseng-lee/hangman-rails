@@ -1,5 +1,3 @@
-require './app/services/make_guess'
-
 class HangmanGameController < ApplicationController
   def index
     @games = HangmanGame.all
@@ -23,7 +21,7 @@ class HangmanGameController < ApplicationController
   end
 
   def update
-    if MakeGuess.new(hangman_game_id: params[:id], char: params[:guess]).call
+    if MakeGuess.new(hangman_game: HangmanGame.find(params[:id]), char: params[:guess]).call
       redirect_to show
     else
       flash[:error] = "Couldn't update guesses"

@@ -1,12 +1,10 @@
-require './app/models/guess'
-
 class MakeGuess
   def initialize(args)
-    @hangman_game_id = args.fetch(:hangman_game_id, nil)
+    @hangman_game = args.fetch(:hangman_game, nil)
     @char = args.fetch(:char, nil)
   end
 
   def call
-    Guess.create(hangman_game_id: @hangman_game_id, char: @char.downcase).valid?
+    Guess.new(hangman_game: @hangman_game, char: @char.downcase).save
   end
 end

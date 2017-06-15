@@ -8,7 +8,7 @@ class HangmanGame < ApplicationRecord
 
   def masked_word
     mystery_word.chars.map do |c|
-      if Guess.find_by char: c.downcase, hangman_game_id: self.id
+      if self.guesses.find_by char: c.downcase, hangman_game_id: self.id
         c
       else
         nil
@@ -31,7 +31,7 @@ class HangmanGame < ApplicationRecord
   private
 
   def duplicate?(input)
-    Guess.find_by char: input, hangman_game_id: self.id
+    self.guesses.find_by char: input, hangman_game_id: self.id
   end
 
   def single_alpha?(input)
@@ -39,6 +39,6 @@ class HangmanGame < ApplicationRecord
   end
 
   def incorrect_guesses
-    Guess.where("char NOT IN (?)", mystery_word.chars)
+    self.guesses.where("char NOT IN (?)", mystery_word.chars)
   end
 end

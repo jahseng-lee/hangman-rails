@@ -10,6 +10,7 @@ RSpec.describe HangmanGameController do
 
   describe 'GET show(id)' do
     let(:id) { 10 }
+    # TODO let(:other_game)
 
     it 'gets the game specified by id' do
       create(:hangman_game, :id => id)
