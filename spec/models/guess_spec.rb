@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Guess do
   let(:char) { 'f' }
   let(:hangman_game) { 1 }
-  let(:game) { HangmanGame.create(mystery_word: 'doesntmatter', initial_lives: 1) }
+  let(:game) { create(:hangman_game) }
 
   describe 'testing guess validation' do
     context 'with invalid input' do

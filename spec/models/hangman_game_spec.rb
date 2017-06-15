@@ -79,16 +79,16 @@ RSpec.describe HangmanGame do
 
     context 'given input occuring in the mystery word' do
       let(:correct_input) { mystery_word.chars.first }
+      before do
+        create(:guess, :char => correct_input, :hangman_game => game)
+      end
 
       it 'reveals the letter in masked word' do
-        MakeGuess.new(char: correct_input, hangman_game: game).call
-
         expect(game.masked_word).to eql([ 'a', nil, nil ])
       end
 
       it 'does not decrement life' do
         initial_lives = game.lives
-        MakeGuess.new(char: correct_input, hangman_game: game).call
 
         expect(game.lives).to eql(initial_lives)
       end
@@ -98,27 +98,16 @@ RSpec.describe HangmanGame do
       let(:incorrect_input) { 'z' }
 
       it 'does not reveal any letters in masked word' do
-        MakeGuess.new(char: incorrect_input, hangman_game: game).call
+        create(:guess, :char => incorrect_input, :hangman_game => game)
 
         expect(game.masked_word).to eql([ nil, nil, nil ])
       end
 
       it 'does decrement the players life' do
         initial_lives = game.lives
-        MakeGuess.new(char: incorrect_input, hangman_game: game).call
+        create(:guess, :char => incorrect_input, :hangman_game => game)
 
         expect(game.lives).to eql(initial_lives - 1)
-      end
-    end
-
-    context 'given uppercase input appearing in the word' do
-      let(:uppercase_input) { 'A' }
-
-      it 'reveals the letter in the masked word' do
-        # TODO replace MakeGuess with guess factory
-        MakeGuess.new(char: uppercase_input, hangman_game: game).call
-
-        expect(game.masked_word).to eql([ 'a', nil, nil ])
       end
     end
   end
@@ -128,13 +117,13 @@ RSpec.describe HangmanGame do
 
     context 'given lowercase input' do
       it 'reveals the uppercase letter in the masked word' do
-        MakeGuess.new(char: 'a', hangman_game: game).call
+        create(:guess, :char => 'a', :hangman_game => game)
 
         expect(game.masked_word).to eql([ 'A', nil, nil, nil ])
       end
 
       it 'reveals all occurences of letter regardless of case' do
-        MakeGuess.new(char: 'c', hangman_game: game).call
+        create(:guess, :char => 'c', :hangman_game => game)
 
         expect(game.masked_word).to eql([ nil, nil, 'C', 'c' ])
       end
@@ -145,9 +134,9 @@ RSpec.describe HangmanGame do
     let(:mystery_word) { 'abc' }
 
     it 'wins the game' do
-      MakeGuess.new(char: mystery_word.chars.first, hangman_game: game).call
-      MakeGuess.new(char: mystery_word.chars.second, hangman_game: game).call
-      MakeGuess.new(char: mystery_word.chars.third, hangman_game: game).call
+      create(:guess, :char => mystery_word.chars.first, :hangman_game => game)
+      create(:guess, :char => mystery_word.chars.second, :hangman_game => game)
+      create(:guess, :char => mystery_word.chars.third, :hangman_game => game)
 
       expect(game).to be_won
       expect(game).not_to be_running
@@ -159,7 +148,7 @@ RSpec.describe HangmanGame do
     let(:initial_lives) { 1 }
 
     it 'loses the game' do
-      MakeGuess.new(char: 'y', hangman_game: game).call
+      create(:guess, :char => 'y', :hangman_game => game)
 
       expect(game).not_to be_won
       expect(game).not_to be_running
