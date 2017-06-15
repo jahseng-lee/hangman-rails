@@ -1,5 +1,10 @@
 <%= render 'partials/header' %>
 <div class='page-container game-container'>
-  <div class='hangman-picture'></div>
-  <%= render 'partials/hangman_game/game_info', :game => @game %>
+  <div class='hangman-picture'>
+    <!-- TODO error handling -->
+  </div>
+  <div class='user-interface-panel'>
+    <%= render 'partials/hangman_game/game_info', :game => @game %>
+    <%= render 'partials/hangman_game/guess_form' %>
+  </div>
 </div>

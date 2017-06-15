@@ -1,5 +1,5 @@
 $picture-width: 70%;
-$info-width: 100% - $picture-width;
+$interface-width: 100% - $picture-width;
 
 .game-container {
   height: 100%;
@@ -12,21 +12,21 @@ $info-width: 100% - $picture-width;
     width: $picture-width;
   }
 
-  .game-info-container {
-    height: 100%;
-    width: $info-width;
-
+  .user-interface-panel {
     display: flex;
     flex-direction: column;
+
+    height: 100%;
+    width: $interface-width;
 
     color: white;
     background-color: black;
 
     border-left: 2px solid black;
+  }
 
-    .game-info {
-      padding-left: 20px;
-      padding-top: 35px;
-    }
+  .interface-component {
+    padding-left: 20px;
+    padding-top: 35px;
   }
 }
