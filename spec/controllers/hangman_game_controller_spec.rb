@@ -9,18 +9,15 @@ RSpec.describe HangmanGameController do
   end
 
   describe 'GET show(id)' do
-    let(:id) { 10 }
-    # TODO let(:other_game)
+    let(:game) { create(:hangman_game) }
 
     it 'gets the game specified by id' do
-      create(:hangman_game, :id => id)
-      get :show, params: { :id => id }
+      get :show, params: { id:  game.id }
 
-      expect(assigns(:game)[:id]).to eql(id)
+      expect(assigns(:game)).to eql(game)
     end
 
     it 'renders the show template' do
-      game = create(:hangman_game)
       get :show, params: { id: game.id }
 
       expect(response).to render_template('show')
