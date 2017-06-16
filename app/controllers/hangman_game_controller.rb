@@ -16,16 +16,17 @@ class HangmanGameController < ApplicationController
     if @game.save
       redirect_to @game
     else
-      flash[:error] = "Couldn't save"
+      @game.errors.add(:game, "Couldn't save")
+      redirect_to "https://http.cat/500";
     end
   end
 
   def update
     if MakeGuess.new(hangman_game: HangmanGame.find(params[:id]), char: params[:guess]).call
-      redirect_to show
-    else
-      flash[:error] = "Couldn't update guesses"
+      HangmanGame.find(params[:id]).errors.add(:game, "Couldn't update guesses")
     end
+
+    redirect_to show
   end
 
   private
