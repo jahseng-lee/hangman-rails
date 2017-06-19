@@ -22,11 +22,16 @@ class HangmanGameController < ApplicationController
   end
 
   def update
-    if MakeGuess.new(hangman_game: HangmanGame.find(params[:id]), char: params[:guess]).call
-      HangmanGame.find(params[:id]).errors.add(:game, "Couldn't update guesses")
+    @game = HangmanGame.find(params[:id])
+    service = MakeGuess.new(char: params[:guess], hangman_game: @game)
+
+    unless service.call
+      flash[:errors] = service.error_messages
+    else
+      flash[:errors] = []
     end
 
-    redirect_to show
+    render "show"
   end
 
   private
