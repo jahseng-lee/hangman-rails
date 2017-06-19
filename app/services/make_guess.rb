@@ -1,10 +1,11 @@
 class MakeGuess
-  def initialize(args)
-    @hangman_game = args.fetch(:hangman_game, nil)
-    @char = args.fetch(:char, nil)
+  def initialize(hangman_game:, char:)
+    @hangman_game = hangman_game
+    @char = char
+    @guess = Guess.new(hangman_game: @hangman_game, char: @char.downcase)
   end
 
   def call
-    Guess.new(hangman_game: @hangman_game, char: @char.downcase).save
+    @guess.save
   end
 end
