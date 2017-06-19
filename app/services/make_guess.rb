@@ -8,4 +8,8 @@ class MakeGuess
   def call
     @guess.save
   end
+
+  def error_messages
+    @guess.errors.full_messages
+  end
 end
