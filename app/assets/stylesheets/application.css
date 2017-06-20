@@ -33,3 +33,7 @@ input {
   width: 100vw;
 }
 
+a:link, a:visited, a:active {
+  color: black;
+  text-decoration: none;
+}
