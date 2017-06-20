@@ -8,15 +8,11 @@ class HangmanGameController < ApplicationController
   end
 
   def create
-    @game = HangmanGame.new(
-      mystery_word: HangmanGameHelper.random_word,
-      initial_lives: HangmanGameHelper::INITIAL_LIVES
-    )
+    service = MakeGame.new
 
-    if @game.save
-      redirect_to @game
+    if service.call
+      redirect_to service.game
     else
-      @game.errors.add(:game, "Couldn't save")
       redirect_to "https://http.cat/500";
     end
   end
