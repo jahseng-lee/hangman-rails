@@ -26,7 +26,7 @@ class HangmanGameController < ApplicationController
     service = MakeGuess.new(char: params[:guess], hangman_game: @game)
 
     unless service.call
-      flash[:errors] = service.error_messages
+      flash[:errors] = HangmanGameHelper.translate_errors_for_user(service.error_messages)
     else
       flash[:errors] = []
     end
