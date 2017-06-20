@@ -13,8 +13,12 @@ module HangmanGameHelper
   end
 
   def self.translate_errors_for_user(errors_arr)
-    errors_arr.map do |err|
-      ERROR_TRANSLATIONS[err]
+    if errors_arr.include? "Hangman game is over"
+      errors_arr = [ ERROR_TRANSLATIONS["Hangman game is over"] ]
+    else
+      errors_arr.map do |err|
+        ERROR_TRANSLATIONS[err]
+      end
     end
   end
 end
