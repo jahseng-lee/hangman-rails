@@ -8,8 +8,7 @@ module HangmanGameHelper
   }
 
   def self.random_word
-    # TODO make this an actual random word
-    "Powershop"
+    File.read('./app/assets/dictionary.txt').split("\n").sample
   end
 
   def self.translate_errors_for_user(errors_arr)
