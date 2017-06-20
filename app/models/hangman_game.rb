@@ -35,6 +35,10 @@ class HangmanGame < ApplicationRecord
     end
   end
 
+  def incorrect_guesses
+    self.guesses.where("char NOT IN (?)", mystery_word.chars)
+  end
+
   private
 
   def duplicate?(input)
@@ -43,9 +47,5 @@ class HangmanGame < ApplicationRecord
 
   def single_alpha?(input)
     input.match(/^[[:alpha:]]$/)
-  end
-
-  def incorrect_guesses
-    self.guesses.where("char NOT IN (?)", mystery_word.chars)
   end
 end

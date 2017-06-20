@@ -12,6 +12,12 @@
     </div>
   </div>
   <div class='interface-component'>
+    Letters not in word:
+    <% game.incorrect_guesses.map do |guess| %>
+      <%= guess.char %>
+    <% end %>
+  </div>
+  <div class='interface-component'>
     Lives left: <%= game.lives %>
   </div>
 </div>
