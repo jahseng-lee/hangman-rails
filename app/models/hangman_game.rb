@@ -28,6 +28,13 @@ class HangmanGame < ApplicationRecord
     lives > 0 && !won?
   end
 
+  def last_turn_correct?
+    last_guess = self.guesses.last
+    unless last_guess.nil?
+      mystery_word.include? last_guess.char
+    end
+  end
+
   private
 
   def duplicate?(input)

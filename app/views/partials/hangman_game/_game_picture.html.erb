@@ -5,5 +5,23 @@
         <%= err %>
       </div>
     <% end %>
+  <% elsif @game.guesses.length == 0 %>
+    <div class="welcome-message">
+      <span>
+        Welcome to Hangman!
+      </span>
+    </div>
+  <% elsif @game.last_turn_correct? %>
+    <div class="correct-message">
+      <span>
+        CORRECT
+      </span>
+    </div>
+  <% else %>
+    <div class="incorrect-message">
+      <span>
+        INCORRECT
+      </span>
+    </div>
   <% end %>
 </div>

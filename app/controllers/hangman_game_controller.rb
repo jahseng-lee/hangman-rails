@@ -28,7 +28,7 @@ class HangmanGameController < ApplicationController
     unless service.call
       flash[:errors] = HangmanGameHelper.translate_errors_for_user(service.error_messages)
     else
-      flash[:errors] = []
+      flash[:errors] = nil
     end
 
     render "show"
