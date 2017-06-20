@@ -24,6 +24,10 @@ $interface-width: 100% - $picture-width;
       background-color: red;
     }
 
+    .welcome-message {
+      @include message;
+    }
+
     .correct-message {
       @include message;
 
