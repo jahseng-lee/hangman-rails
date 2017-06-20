@@ -31,7 +31,7 @@ class HangmanGame < ApplicationRecord
   def last_turn_correct?
     last_guess = self.guesses.last
     unless last_guess.nil?
-      mystery_word.include? last_guess.char
+      mystery_word.downcase.include? last_guess.char
     end
   end
 
