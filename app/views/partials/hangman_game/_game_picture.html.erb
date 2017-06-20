@@ -1,0 +1,9 @@
+<div class='hangman-picture'>
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |err| %>
+      <div class="error-message">
+        <%= err %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

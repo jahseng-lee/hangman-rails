@@ -10,6 +10,16 @@ $interface-width: 100% - $picture-width;
 
   .hangman-picture {
     width: $picture-width;
+
+    .error-message {
+      height: 100%;
+
+      text-align: center;
+      font-size: 80px;
+
+      color: #63000b;
+      background-color: red;
+    }
   }
 
   .user-interface-panel {
