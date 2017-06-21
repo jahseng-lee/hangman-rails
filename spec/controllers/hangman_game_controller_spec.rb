@@ -40,7 +40,7 @@ RSpec.describe HangmanGameController do
     let(:guess_service) { instance_double(MakeGuess) }
     before do
       allow(MakeGuess).to receive(:new).and_return guess_service
-      allow(guess_service).to receive(:error_messages)
+      allow(guess_service).to receive(:error_messages).and_return(['Test error message'])
       allow(guess_service).to receive(:call)
     end
 
