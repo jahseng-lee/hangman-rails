@@ -1,8 +1,12 @@
-<div class='interface-component'>
-  <%= form_tag({ controller: "hangman_game", action: "update" }, method: "put") do %>
-    <%= label_tag(:guess, "Guess: ") %>
-    <%= text_field_tag(:guess) %>
+<% if @game.running? %>
 
-    <%= submit_tag("GO!") %>
-  <% end %>
-</div>
+  <div class='interface-component'>
+    <%= form_tag({ controller: "hangman_game", action: "update" }, method: "put") do %>
+      <%= label_tag(:guess, "Guess: ") %>
+      <%= text_field_tag(:guess) %>
+
+      <%= submit_tag("GO!") %>
+    <% end %>
+  </div>
+
+<% end %>

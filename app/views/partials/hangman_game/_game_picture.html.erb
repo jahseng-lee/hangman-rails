@@ -1,27 +1,59 @@
 <div class='hangman-picture'>
-  <% if flash[:errors] %>
-    <% flash[:errors].each do |err| %>
-      <div class="error-message">
-        <%= err %>
+  <% if @game.running? %>
+
+    <% if flash[:errors] %>
+
+      <% flash[:errors].each do |err| %>
+        <div class="error-message">
+          <%= err %>
+        </div>
+      <% end %>
+
+    <% elsif @game.guesses.length == 0 %>
+
+      <div class="welcome-message">
+        <span>
+          Welcome to Hangman!
+        </span>
       </div>
+
+    <% elsif @game.last_turn_correct? %>
+
+      <div class="correct-message">
+        <span>
+          CORRECT
+        </span>
+      </div>
+
+    <% else %>
+
+      <div class="incorrect-message">
+        <span>
+          INCORRECT
+        </span>
+      </div>
+
     <% end %>
-  <% elsif @game.guesses.length == 0 %>
-    <div class="welcome-message">
-      <span>
-        Welcome to Hangman!
-      </span>
-    </div>
-  <% elsif @game.last_turn_correct? %>
-    <div class="correct-message">
-      <span>
-        CORRECT
-      </span>
-    </div>
+
   <% else %>
-    <div class="incorrect-message">
-      <span>
-        INCORRECT
-      </span>
-    </div>
+
+    <% if @game.won? %>
+
+      <div class="win-message">
+        <span>
+          Congratulations, you've won! Now go play a real game.
+        </span>
+      </div>
+
+    <% else %>
+
+      <div class="lose-message">
+        <span>
+          Oh no! You've lost. The word was: <%= @game.mystery_word %>
+        </span>
+      </div>
+
+    <% end %>
+
   <% end %>
 </div>

@@ -39,6 +39,18 @@ $interface-width: 100% - $picture-width;
 
       background-color: #fcbd00;
     }
+
+    .win-message {
+      @include message;
+
+      background-color: #ff87e7;
+    }
+
+    .lose-message {
+      @include message;
+
+      background-color: #f8ff7a;
+    }
   }
 
   .user-interface-panel {
