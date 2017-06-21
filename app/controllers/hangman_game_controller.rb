@@ -13,7 +13,7 @@ class HangmanGameController < ApplicationController
     if service.call
       redirect_to service.game
     else
-      redirect_to "https://http.cat/500";
+      redirect_to "https://http.cat/500"
     end
   end
 
@@ -21,10 +21,10 @@ class HangmanGameController < ApplicationController
     @game = HangmanGame.find(params[:id])
     service = MakeGuess.new(char: params[:guess], hangman_game: @game)
 
-    unless service.call
-      flash.now[:errors] = HangmanGameHelper.translate_errors_for_user(service.error_messages)
-    else
+    if service.call
       flash[:errors] = nil
+    else
+      flash.now[:errors] = HangmanGameHelper.translate_errors_for_user(service.error_messages)
     end
 
     render "show"

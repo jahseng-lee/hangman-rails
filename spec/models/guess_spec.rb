@@ -7,8 +7,9 @@ RSpec.describe Guess do
 
   describe 'testing guess validation' do
     context 'with invalid input' do
-      let(:symbols) { [ '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[',
-                        ']', '{', '}' ] }
+      let(:symbols) { 
+        ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}']
+      }
 
       it 'does not save symbols' do
         random_symbols = symbols.sample(3)

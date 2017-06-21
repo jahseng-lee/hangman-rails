@@ -2,17 +2,13 @@ class HangmanGame < ApplicationRecord
   has_many :guesses, dependent: :destroy
 
   validates :mystery_word, length: { minimum: 2 }
-  validates_format_of :mystery_word, :with => /\A[A-Za-z]+\Z/
+  validates_format_of :mystery_word, with: /\A[A-Za-z]+\Z/
   validates :initial_lives, numericality: { greater_than: 0 }
   validates_presence_of :mystery_word, :lives
 
   def masked_word
     mystery_word.chars.map do |c|
-      if self.guesses.find_by char: c.downcase, hangman_game_id: self.id
-        c
-      else
-        nil
-      end
+      c if guesses.find_by char: c.downcase, hangman_game_id: id
     end
   end
 
@@ -29,20 +25,18 @@ class HangmanGame < ApplicationRecord
   end
 
   def last_turn_correct?
-    last_guess = self.guesses.last
-    unless last_guess.nil?
-      mystery_word.downcase.include? last_guess.char
-    end
+    last_guess = guesses.last
+    mystery_word.downcase.include? last_guess.char unless last_guess.nil?
   end
 
   def incorrect_guesses
-    self.guesses.where("char NOT IN (?)", mystery_word.chars)
+    guesses.where("char NOT IN (?)", mystery_word.chars)
   end
 
   private
 
   def duplicate?(input)
-    self.guesses.find_by char: input, hangman_game_id: self.id
+    guesses.find_by char: input, hangman_game_id: id
   end
 
   def single_alpha?(input)

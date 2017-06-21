@@ -47,7 +47,7 @@ RSpec.describe HangmanGameController do
     it 'calls the MakeGuess service\'s call method' do
       expect(guess_service).to receive(:call)
 
-      put :update, params: { :id => game.id, :guess => 'f' }
+      put :update, params: { id: game.id, guess: 'f' }
     end
   end
 end
