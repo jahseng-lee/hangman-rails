@@ -2,7 +2,7 @@
   <div class='interface-component'>
     Current word:
     <div>
-      <% game.masked_word.each do |letter| %>
+      <% @game.masked_word.each do |letter| %>
         <% if letter == nil %>
           _
         <% else %>
@@ -13,11 +13,11 @@
   </div>
   <div class='interface-component'>
     Letters not in word:
-    <% game.incorrect_guesses.map do |guess| %>
+    <% @game.incorrect_guesses.map do |guess| %>
       <%= guess.char %>
     <% end %>
   </div>
-  <div class='interface-component'>
-    Lives left: <%= game.lives %>
-  </div>
+    <div class='interface-component'>
+      Lives left: <%= @game.lives %>
+    </div>
 </div>
