@@ -1,8 +1,40 @@
 <div>
-  <% @games.each do |game| %>
-    <div>
-      <%= game.masked_word %>
-      <%= game.lives %>
-    </div>
+  <% @games.reverse_each do |game| %>
+
+    <%= link_to game do %>
+      <% if game.won? %>
+        <div class="game-listing-won">
+      <% elsif !game.running? && !game.won? %>
+        <div class="game-listing-lost">
+      <% else %>
+        <div class="game-listing">
+      <% end %>
+
+      <% if game.running? %>
+        <div class="masked-word">
+          <span>
+            Word guessed so far:
+            <% game.masked_word.map do |char| %>
+              <%= "_" if char.nil? %>
+              <%= char if char %>
+            <% end %>
+          </span>
+        </div>
+      <% else %>
+        <div class="mystery-word">
+          <span>
+            The word was: <%= game.mystery_word %>
+          </span>
+        </div>
+      <% end %>
+
+      <div class="lives">
+        <span>
+          Lives left: <%= game.lives %>
+        </span>
+      </div>
+
+      </div>
+    <% end %>
   <% end %>
 </div>

@@ -1,0 +1,39 @@
+.game-listing {
+  display: flex;
+  flex-direction: row;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background-color: yellow;
+  border-bottom: 1px solid lightgray;
+}
+
+.game-listing-won {
+  @extend .game-listing;
+
+  background-color: green;
+}
+
+.game-listing-lost {
+  @extend .game-listing;
+
+  background-color: red;
+}
+
+@mixin word {
+  padding-left: 20px;
+  padding-right: 10px;
+
+  &:after {
+    content: " | ";
+  }
+}
+
+.masked-word {
+  @include word;
+}
+
+.mystery-word {
+  @include word;
+}
