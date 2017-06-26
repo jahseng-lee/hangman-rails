@@ -19,7 +19,7 @@ class HangmanGameController < ApplicationController
 
   def update
     @game = HangmanGame.find(params[:id])
-    service = MakeGuess.new(char: params[:guess], hangman_game: @game)
+    service = MakeGuess.new(char: hangman_game_params[:guess], hangman_game: @game)
 
     if service.call
       flash[:errors] = nil
@@ -33,6 +33,6 @@ class HangmanGameController < ApplicationController
   private
 
   def hangman_game_params
-    params.require(:hangman_game).permit(:guess)
+    params.permit(:guess)
   end
 end
