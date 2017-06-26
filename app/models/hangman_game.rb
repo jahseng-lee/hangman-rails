@@ -30,16 +30,6 @@ class HangmanGame < ApplicationRecord
   end
 
   def incorrect_guesses
-    guesses.where("char NOT IN (?)", mystery_word.chars)
-  end
-
-  private
-
-  def duplicate?(input)
-    guesses.find_by char: input, hangman_game_id: id
-  end
-
-  def single_alpha?(input)
-    input.match(/^[[:alpha:]]$/)
+    guesses.not_in(mystery_word)
   end
 end
