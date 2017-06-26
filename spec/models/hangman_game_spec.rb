@@ -121,23 +121,6 @@ RSpec.describe HangmanGame do
         expect(game.lives).to eql(initial_lives - 1)
       end
     end
-
-    context "given uppercase input" do
-      let(:uppercase_input) { mystery_word.chars.first.upcase }
-
-      it "reveals thew lowercase letter in masked word" do
-        create(:guess, char: uppercase_input, hangman_game: game)
-
-        expect(game.masked_word).to eql(["a", nil, nil])
-      end
-
-      it "does not decrement life" do
-        initial_lives = game.lives
-        create(:guess, char: uppercase_input, hangman_game: game)
-
-        expect(game.lives).to eql(initial_lives)
-      end
-    end
   end
 
   describe "testing all letters are guessed" do
