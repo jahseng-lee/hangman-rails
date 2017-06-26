@@ -28,6 +28,10 @@ RSpec.describe Guess do
         expect(Guess.create(char: 'foo', hangman_game: game)).to be_invalid
       end
 
+      it 'does not save a capitalized input' do
+        expect(Guess.create(char: 'F', hangman_game: game)).to be_invalid
+      end
+
       it 'does not save an input already guessed in a game' do
         Guess.create(char: 'f', hangman_game: game)
 
