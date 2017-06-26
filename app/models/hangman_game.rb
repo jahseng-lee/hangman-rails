@@ -2,9 +2,9 @@ class HangmanGame < ApplicationRecord
   has_many :guesses, dependent: :destroy
 
   validates :mystery_word, length: { minimum: 2 }
-  validates_format_of :mystery_word, with: /\A[A-Za-z]+\Z/
   validates :initial_lives, numericality: { greater_than: 0 }
   validates_presence_of :mystery_word, :lives
+  validates_format_of :mystery_word, with: /\A[a-z]+\Z/
 
   def masked_word
     mystery_word.chars.map do |c|
