@@ -61,4 +61,31 @@ RSpec.describe Guess do
       end
     end
   end
+
+  describe "scopes" do
+    context 'with correct guesses and incorrect guesses' do
+      let(:game) { create(:hangman_game, mystery_word: "foobar", initial_lives: 10) }
+
+      before do
+        Guess.create(char: 'f', hangman_game: game)
+        Guess.create(char: 'o', hangman_game: game)
+        Guess.create(char: 'z', hangman_game: game)
+        Guess.create(char: 'x', hangman_game: game)
+      end
+
+      describe "#in" do
+        it 'returns all correct guesses' do
+          expect(Guess.in(game.mystery_word).pluck(:char)).to match_array(['f', 'o'])
+        end
+      end
+
+      describe "#not_in" do
+        context 'with correct guesses and incorrect guesses' do
+          it 'returns all incorrect guesses' do
+            expect(Guess.not_in(game.mystery_word).pluck(:char)).to match_array(['z', 'x'])
+          end
+        end
+      end
+    end
+  end
 end
