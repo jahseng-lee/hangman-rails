@@ -7,7 +7,7 @@ RSpec.describe Guess do
 
   describe 'testing guess validation' do
     context 'with invalid input' do
-      let(:symbols) { 
+      let(:symbols) {
         ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}']
       }
 
