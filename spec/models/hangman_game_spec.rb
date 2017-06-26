@@ -91,10 +91,12 @@ RSpec.describe HangmanGame do
     context "given input occuring in the mystery word" do
       let(:correct_input) { mystery_word.chars.first }
 
-      it "reveals the letter in masked word" do
-        create(:guess, char: correct_input, hangman_game: game)
+      describe "#correct_guesses" do
+        it "returns the correct guess" do
+          create(:guess, char: correct_input, hangman_game: game)
 
-        expect(game.masked_word).to eql(["a", nil, nil])
+          expect(game.correct_guesses).to match_array([correct_input])
+        end
       end
 
       it "does not decrement life" do
@@ -106,12 +108,15 @@ RSpec.describe HangmanGame do
     end
 
     context "given input not appearing in the mystery word" do
+      let(:mystery_word) { "abc" }
       let(:incorrect_input) { "z" }
 
-      it "does not reveal any letters in masked word" do
-        create(:guess, char: incorrect_input, hangman_game: game)
+      describe "#incorrect_guesses" do
+        it "returns the incorrect guess" do
+          create(:guess, char: incorrect_input, hangman_game: game)
 
-        expect(game.masked_word).to eql([nil, nil, nil])
+          expect(game.incorrect_guesses).to match_array([incorrect_input])
+        end
       end
 
       it "does decrement the players life" do
