@@ -7,7 +7,7 @@ class MakeGame
 
   def initialize
     @game = HangmanGame.new(
-      mystery_word: random_word,
+      mystery_word: random_word.downcase,
       initial_lives: INITIAL_LIVES
     )
   end
