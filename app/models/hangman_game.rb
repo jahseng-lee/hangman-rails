@@ -20,8 +20,12 @@ class HangmanGame < ApplicationRecord
     mystery_word.chars.eql? masked_word
   end
 
+  def lost?
+    lives == 0
+  end
+
   def running?
-    lives > 0 && !won?
+    !lost? && !won?
   end
 
   def last_turn_correct?
