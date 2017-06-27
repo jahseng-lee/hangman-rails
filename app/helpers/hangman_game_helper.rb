@@ -5,7 +5,7 @@ module HangmanGameHelper
     "Char already guessed" => "You've already tried that character."
   }
 
-  def self.translate_errors_for_user(errors_arr)
+  def translate_errors_for_user(errors_arr)
     if errors_arr.include? "Hangman game is over"
       errors_arr = [ ERROR_TRANSLATIONS["Hangman game is over"] ]
     else
@@ -13,5 +13,19 @@ module HangmanGameHelper
         ERROR_TRANSLATIONS[err]
       end
     end
+  end
+
+  def reverse_order(games)
+    games.order("created_at").reverse
+  end
+
+  def masked_word(game)
+    game.mystery_word.chars.map do |c|
+      if game.correct_guesses.include? c
+        c
+      else
+        "_"
+      end
+    end.join(" ")
   end
 end

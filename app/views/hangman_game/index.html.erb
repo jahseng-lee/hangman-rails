@@ -1,10 +1,10 @@
 <div>
-  <% @games.reverse_each do |game| %>
+  <% reverse_order(@games).each do |game| %>
 
     <%= link_to game do %>
       <% if game.won? %>
         <div class="game-listing-won">
-      <% elsif !game.running? && !game.won? %>
+      <% elsif game.lost? %>
         <div class="game-listing-lost">
       <% else %>
         <div class="game-listing">
@@ -13,11 +13,7 @@
       <% if game.running? %>
         <div class="masked-word">
           <span>
-            Word guessed so far:
-            <% game.masked_word.map do |char| %>
-              <%= "_" if char.nil? %>
-              <%= char if char %>
-            <% end %>
+            <%= masked_word(game) %>
           </span>
         </div>
       <% else %>
