@@ -45,6 +45,8 @@ group :development, :test do
   # Add Factory Girls for test database
   gem 'factory_girl_rails'
   gem 'rails-controller-testing'
+  # Add Cucumber
+  gem 'cucumber-rails', :require => false
 end
 
 group :development do
