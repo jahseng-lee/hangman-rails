@@ -26,7 +26,7 @@ module HangmanGameHelper
       else
         "_"
       end
-    end.join(" ")
+    end.join(" ").capitalize
   end
 
   def format_guesses(guesses_arr)
