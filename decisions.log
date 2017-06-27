@@ -27,3 +27,11 @@ Minns: Leaned towards 3 as well
 
 Decision: 3, with a helper for the view to create nice errors for the user.
 
+----------------------------------
+form_tag replacement with form_fr:
+  I decided against this. According to the rails model, form_for is designed for model objects.
+  In this case, the HangmanGameController's update method creates a Guess object through a
+  service. 
+  form_for(:guess) seems incorrect as Guess doesn't have a controller associated.
+  form_for(:game) seems incorrect as tying a form to a Game object which only creates a Guess
+  seems weird.
