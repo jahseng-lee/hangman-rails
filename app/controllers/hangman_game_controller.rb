@@ -1,4 +1,6 @@
 class HangmanGameController < ApplicationController
+  include HangmanGameHelper
+
   def index
     @games = HangmanGame.all
   end
@@ -24,7 +26,7 @@ class HangmanGameController < ApplicationController
     if service.call
       flash[:errors] = nil
     else
-      flash.now[:errors] = HangmanGameHelper.translate_errors_for_user(service.error_messages)
+      flash.now[:errors] = translate_errors_for_user(service.error_messages)
     end
 
     render "show"
