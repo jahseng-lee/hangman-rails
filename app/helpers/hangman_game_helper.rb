@@ -28,4 +28,8 @@ module HangmanGameHelper
       end
     end.join(" ")
   end
+
+  def format_guesses(guesses_arr)
+    guesses_arr.join(" ")
+  end
 end
