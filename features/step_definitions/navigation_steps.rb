@@ -16,3 +16,7 @@ end
 Then(/^they should see a list of games$/) do
   expect(page).to have_current_path("/hangman_game")
 end
+
+Then(/^they should see a( new)? game screen$/) do |doesnt_matter|
+  expect(page).to have_current_path(/\/hangman_game\/[0-9]+/)
+end

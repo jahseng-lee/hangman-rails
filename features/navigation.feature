@@ -13,7 +13,7 @@ Feature: Navigation
   Scenario: User wants to start a new game
     Given user visits site
     When they click the "New Game" button
-    Then they should see a new game
+    Then they should see a new game screen
 
   Scenario: User wants to view all past games
     Given user visits site
@@ -24,5 +24,5 @@ Feature: Navigation
     Given a Hangman Game exists
     And user visits the past games page
     When they click on a game
-    Then they should see a game
+    Then they should see a game screen
 
