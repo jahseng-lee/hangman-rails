@@ -1,7 +1,3 @@
-Given(/^a Hangman Game exists$/) do
-  HangmanGame.create!(mystery_word: "foo", initial_lives: 3)
-end
-
 Given(/^user has started a game$/) do
   visit "/"
   click_button "New Game"
