@@ -21,7 +21,7 @@ class HangmanGame < ApplicationRecord
   end
 
   def lost?
-    lives == 0
+    lives.zero?
   end
 
   def running?
