@@ -1,5 +1,11 @@
 <div class='page-container game-container'>
-  <%= render 'partials/hangman_game/game_picture' %>
+    <div class='hangman-picture'>
+      <% if @game.running? %>
+        <%= render 'partials/hangman_game/running_picture' %>
+      <% else %>
+        <%= render 'partials/hangman_game/gameover_picture' %>
+      <% end %>
+    </div>
   <div class='user-interface-panel'>
     <%= render 'partials/hangman_game/game_info' %>
     <%= render 'partials/hangman_game/guess_form' %>

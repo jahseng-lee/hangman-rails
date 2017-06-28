@@ -1,0 +1,18 @@
+<% if @game.won? %>
+
+  <div class="win-message">
+    <span>
+      Congratulations, you've won! Now go play a real game.
+    </span>
+  </div>
+
+<% else %>
+
+  <div class="lose-message">
+    <span>
+      Oh no! You've lost. The word was: <%= @game.mystery_word.capitalize %>
+    </span>
+  </div>
+
+<% end %>
+
