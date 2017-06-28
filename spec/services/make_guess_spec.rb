@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe MakeGuess do
   let(:game) { create(:hangman_game) }
-  subject(:make_guess) { MakeGuess.new(char: char, hangman_game: game) }
+  subject(:make_guess) { MakeGuess.new(letter: letter, hangman_game: game) }
 
   describe '#call' do
     context 'with valid parameters' do
-      let(:char) { 'f' }
+      let(:letter) { 'f' }
 
       it 'returns a truthy value' do
         expect(make_guess.call).to be_truthy
@@ -17,18 +17,18 @@ RSpec.describe MakeGuess do
       end
 
       describe 'and an uppercase input' do
-        let(:char) { 'F' }
+        let(:letter) { 'F' }
 
         it 'creates a downcase Guess' do
           make_guess.call
 
-          expect(game.guesses.find_by(char: 'f')).to be_truthy
+          expect(game.guesses.find_by(letter: 'f')).to be_truthy
         end
       end
     end
 
     context 'with invalid parameters' do
-      let(:char) { '' }
+      let(:letter) { '' }
 
       it 'returns a falsey value' do
         expect(make_guess.call).to be_falsey

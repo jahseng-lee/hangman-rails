@@ -21,7 +21,7 @@ class HangmanGameController < ApplicationController
 
   def update
     @game = HangmanGame.find(params[:id])
-    service = MakeGuess.new(char: hangman_game_params[:guess], hangman_game: @game)
+    service = MakeGuess.new(letter: hangman_game_params[:guess], hangman_game: @game)
 
     if service.call
       flash[:errors] = nil

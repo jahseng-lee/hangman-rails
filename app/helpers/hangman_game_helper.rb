@@ -1,8 +1,8 @@
 module HangmanGameHelper
   ERROR_TRANSLATIONS = {
     "Hangman game is over" => "This game is already completed!",
-    "Char is invalid" => "The guess you entered isn't an alphabetical character.",
-    "Char already guessed" => "You've already tried that character."
+    "Letter is invalid" => "The guess you entered isn't an alphabetical letteracter.",
+    "Letter already guessed" => "You've already tried that letteracter."
   }.freeze
 
   def translate_errors_for_user(errors_arr)

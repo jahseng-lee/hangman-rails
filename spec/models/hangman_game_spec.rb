@@ -44,7 +44,7 @@ RSpec.describe HangmanGame do
       end
     end
 
-    context "with a singular character word" do
+    context "with a singular letteracter word" do
       let(:mystery_word) { "h" }
 
       it "does not save" do
@@ -52,8 +52,8 @@ RSpec.describe HangmanGame do
       end
     end
 
-    context "with an alphabetical word containing atleast 2 characters" do
-      context "containing uppercase letters" do
+    context "with an alphabetical word containing atleast 2 letteracters" do
+      context "containing uppercase chars" do
         let(:mystery_word) { "Hh" }
 
         it "does not save" do
@@ -61,7 +61,7 @@ RSpec.describe HangmanGame do
         end
       end
 
-      context "with an alphabetical mystery word with more than 1 character" do
+      context "with an alphabetical mystery word with more than 1 letteracter" do
         let(:mystery_word) { "hh" }
 
         it "saves" do
@@ -93,7 +93,7 @@ RSpec.describe HangmanGame do
 
       describe "#correct_guesses" do
         it "returns the correct guess" do
-          create(:guess, char: correct_input, hangman_game: game)
+          create(:guess, letter: correct_input, hangman_game: game)
 
           expect(game.correct_guesses).to match_array([correct_input])
         end
@@ -101,7 +101,7 @@ RSpec.describe HangmanGame do
 
       it "does not decrement life" do
         initial_lives = game.lives
-        create(:guess, char: correct_input, hangman_game: game)
+        create(:guess, letter: correct_input, hangman_game: game)
 
         expect(game.lives).to eql(initial_lives)
       end
@@ -113,7 +113,7 @@ RSpec.describe HangmanGame do
 
       describe "#incorrect_guesses" do
         it "returns the incorrect guess" do
-          create(:guess, char: incorrect_input, hangman_game: game)
+          create(:guess, letter: incorrect_input, hangman_game: game)
 
           expect(game.incorrect_guesses).to match_array([incorrect_input])
         end
@@ -121,20 +121,20 @@ RSpec.describe HangmanGame do
 
       it "does decrement the players life" do
         initial_lives = game.lives
-        create(:guess, char: incorrect_input, hangman_game: game)
+        create(:guess, letter: incorrect_input, hangman_game: game)
 
         expect(game.lives).to eql(initial_lives - 1)
       end
     end
   end
 
-  describe "testing all letters are guessed" do
+  describe "testing all chars are guessed" do
     let(:mystery_word) { "abc" }
 
     it "wins the game" do
-      create(:guess, char: mystery_word.chars.first, hangman_game: game)
-      create(:guess, char: mystery_word.chars.second, hangman_game: game)
-      create(:guess, char: mystery_word.chars.third, hangman_game: game)
+      create(:guess, letter: mystery_word.chars.first, hangman_game: game)
+      create(:guess, letter: mystery_word.chars.second, hangman_game: game)
+      create(:guess, letter: mystery_word.chars.third, hangman_game: game)
 
       expect(game).to be_won
       expect(game).not_to be_running
@@ -146,7 +146,7 @@ RSpec.describe HangmanGame do
     let(:initial_lives) { 1 }
 
     it "loses the game" do
-      create(:guess, char: "y", hangman_game: game)
+      create(:guess, letter: "y", hangman_game: game)
 
       expect(game).not_to be_won
       expect(game).not_to be_running

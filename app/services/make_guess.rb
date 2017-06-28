@@ -1,8 +1,8 @@
 class MakeGuess
-  def initialize(hangman_game:, char:)
+  def initialize(hangman_game:, letter:)
     @hangman_game = hangman_game
-    @char = char
-    @guess = Guess.new(hangman_game: @hangman_game, char: @char.downcase)
+    @letter = letter
+    @guess = Guess.new(hangman_game: @hangman_game, letter: @letter.downcase)
   end
 
   def call
