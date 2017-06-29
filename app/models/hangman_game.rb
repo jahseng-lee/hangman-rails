@@ -11,7 +11,7 @@ class HangmanGame < ApplicationRecord
   end
 
   def lives
-    initial_lives - incorrect_guesses.length # NOTE scope for incorrect_guesses.length?
+    initial_lives - guesses.incorrect_guesses_count(mystery_word)
   end
 
   def won?
