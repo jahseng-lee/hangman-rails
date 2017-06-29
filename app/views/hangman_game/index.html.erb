@@ -1,5 +1,5 @@
 <div>
-  <% reverse_order(@games).each do |game| %>
+  <% @games.each do |game| %>
 
     <%= link_to game do %>
       <% if game.won? %>

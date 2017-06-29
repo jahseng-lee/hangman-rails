@@ -2,7 +2,7 @@ class HangmanGameController < ApplicationController
   include HangmanGameHelper
 
   def index
-    @games = HangmanGame.all
+    @games = HangmanGame.all.order("updated_at").reverse
   end
 
   def show

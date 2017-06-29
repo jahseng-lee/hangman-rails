@@ -15,10 +15,6 @@ module HangmanGameHelper
     end
   end
 
-  def reverse_order(games)
-    games.order("created_at").reverse
-  end
-
   def masked_word(game)
     game.mystery_word.chars.map do |c|
       if game.correct_guesses.include? c
