@@ -16,12 +16,8 @@ module HangmanGameHelper
   end
 
   def masked_word(game)
-    game.mystery_word.chars.map do |c|
-      if game.correct_guesses.include? c
-        c
-      else
-        "_"
-      end
+    game.mystery_word.chars.map do |char|
+      (game.correct_guesses.include? char) ? char : "_"
     end.join(" ").capitalize
   end
 
