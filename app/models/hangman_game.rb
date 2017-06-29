@@ -21,7 +21,7 @@ class HangmanGame < ApplicationRecord
 
   def last_guess_correct?
     # TODO last_guess scope
-    mystery_word.include? guesses.last if guesses.any?
+    mystery_word.include? guesses.last.letter if guesses.any?
   end
 
   def won?
