@@ -1,19 +1,14 @@
 class MakeGame
   attr_reader :game
 
-  ## --------
-  # Constants
   INITIAL_LIVES = 11
 
-  def initialize
+  def call
     @game = HangmanGame.new(
       mystery_word: random_word.downcase,
       initial_lives: INITIAL_LIVES
     )
-  end
-
-  def call
-    @game.save
+    game.save
   end
 
   private
