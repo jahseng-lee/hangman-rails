@@ -24,4 +24,11 @@ module HangmanGameHelper
   def format_guesses(guesses_arr)
     guesses_arr.join(" ")
   end
+
+  def listing_class(game)
+    "game-listing".tap do |listing_class|
+      listing_class << "-won" if game.won?
+      listing_class << "-lost" if game.lost?
+    end
+  end
 end

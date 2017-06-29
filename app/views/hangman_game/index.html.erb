@@ -2,13 +2,7 @@
   <% @games.each do |game| %>
 
     <%= link_to game do %>
-      <% if game.won? %>
-        <div class="game-listing-won">
-      <% elsif game.lost? %>
-        <div class="game-listing-lost">
-      <% else %>
-        <div class="game-listing">
-      <% end %>
+      <div class=<%= listing_class(game) %>>
 
       <% if game.running? %>
         <div class="masked-word">
