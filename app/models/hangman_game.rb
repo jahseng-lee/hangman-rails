@@ -25,9 +25,7 @@ class HangmanGame < ApplicationRecord
   end
 
   def won?
-    mystery_word.chars.uniq.all? do |c|
-      correct_guesses.include? c
-    end
+    !lost? && (mystery_word.chars.uniq - correct_guesses).none?
   end
 
   def lost?
