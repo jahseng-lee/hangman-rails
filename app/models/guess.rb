@@ -8,7 +8,10 @@ class Guess < ApplicationRecord
 
   scope :in, ->(word) { where("letter IN (?)", word.chars) }
   scope :not_in, ->(word) { where("letter NOT IN (?)", word.chars) }
+
   scope :incorrect_guesses_count, ->(word) { not_in(word).count }
+
+  scope :last_guess, -> { order("updated_at").last }
 
   private
 
