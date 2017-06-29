@@ -1,8 +1,9 @@
 class HangmanGame < ApplicationRecord
   has_many :guesses, dependent: :destroy
 
-  validates :mystery_word, length: { minimum: 2 }
   validates :initial_lives, numericality: { greater_than: 0 }
+
+  validates :mystery_word, length: { minimum: 2 }
   validates_presence_of :mystery_word, :initial_lives
   validates_format_of :mystery_word, with: /\A[a-z]+\Z/
 
@@ -10,8 +11,17 @@ class HangmanGame < ApplicationRecord
     guesses.in(mystery_word).pluck(:letter)
   end
 
+  def incorrect_guesses
+    guesses.not_in(mystery_word).pluck(:letter)
+  end
+
   def lives
     initial_lives - guesses.incorrect_guesses_count(mystery_word)
+  end
+
+  def last_guess_correct?
+    # TODO last_guess scope
+    mystery_word.include? guesses.last if guesses.any?
   end
 
   def won?
@@ -27,14 +37,5 @@ class HangmanGame < ApplicationRecord
   def running?
     # NOTE !(lost? || won?)
     !lost? && !won?
-  end
-
-  def last_turn_correct?
-    last_guess = guesses.order("created_at").last
-    correct_guesses.include? last_guess.letter if last_guess
-  end
-
-  def incorrect_guesses
-    guesses.not_in(mystery_word).pluck(:letter)
   end
 end
