@@ -3,12 +3,12 @@
 A Hangman Game written in Rails
 
 ## Installation
-**Dependencies:**  
- - Ruby
+**Dependencies:**
+ - Ruby 2.4.1
  - SQLite3
- - 2.4.1
+ - bundler
 
-**Steps:**:  
+**Steps:**
  1. git clone https://github.com/jahseng-lee/hangman-rails
  2. bundle install
  3. rails server
