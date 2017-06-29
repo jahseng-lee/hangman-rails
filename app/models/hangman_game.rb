@@ -32,7 +32,6 @@ class HangmanGame < ApplicationRecord
   end
 
   def running?
-    # NOTE !(lost? || won?)
     !lost? && !won?
   end
 end
