@@ -1,5 +1,5 @@
 Feature: Finishing a game
-  Background: A game exists
+  Background: a game exists
 
   Scenario: User loses a game
     Given there's only one life left
